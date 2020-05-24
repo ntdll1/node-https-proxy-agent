@@ -126,10 +126,18 @@ export default class HttpsProxyAgent extends Agent {
 
 		socket.write(`${payload}\r\n`);
 
+        function onreqerror () {
+            socket.destroy();
+        }
+
+        req.on('error', onreqerror);
+
 		const {
 			statusCode,
 			buffered
 		} = await proxyResponsePromise;
+
+        req.removeListener('error', onreqerror);
 
 		if (statusCode === 200) {
 			req.once('socket', resume);
