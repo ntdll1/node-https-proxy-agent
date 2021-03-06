@@ -99,7 +99,7 @@ export default class HttpsProxyAgent extends Agent {
 		}
 
 		const headers: OutgoingHttpHeaders = { ...proxy.headers };
-		const hostname = `${opts.host}:${opts.port}`;
+		const hostname = `${opts.ip || opts.host}:${opts.port}`;
 		let payload = `CONNECT ${hostname} HTTP/1.1\r\n`;
 
 		// Inject the `Proxy-Authorization` header if necessary.
